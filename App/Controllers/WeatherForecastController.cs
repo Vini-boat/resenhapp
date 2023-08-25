@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace App.Controllers;
+namespace Resenhapp.Controllers;
 
 [ApiController]
 [Route("[controller]")]

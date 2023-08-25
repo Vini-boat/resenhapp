@@ -1,4 +1,4 @@
-namespace App;
+namespace Resenhapp;
 
 public class WeatherForecast
 {

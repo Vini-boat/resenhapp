@@ -1,27 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\App\\App.csproj": {}
+    "C:\\WorkSpace\\chashtag\\teste\\resenhapp\\App\\App.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\App\\App.csproj": {
+    "C:\\WorkSpace\\chashtag\\teste\\resenhapp\\App\\App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\App\\App.csproj",
+        "projectUniqueName": "C:\\WorkSpace\\chashtag\\teste\\resenhapp\\App\\App.csproj",
         "projectName": "App",
-        "projectPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\App\\App.csproj",
-        "packagesPath": "C:\\Users\\ti18\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\App\\obj\\",
+        "projectPath": "C:\\WorkSpace\\chashtag\\teste\\resenhapp\\App\\App.csproj",
+        "packagesPath": "C:\\Users\\vinicius.bezerra\\.nuget\\packages\\",
+        "outputPath": "C:\\WorkSpace\\chashtag\\teste\\resenhapp\\App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ti18\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\vinicius.bezerra\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
