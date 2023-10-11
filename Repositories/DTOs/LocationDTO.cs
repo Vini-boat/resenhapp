@@ -1,0 +1,7 @@
+namespace Resenhapp;
+
+public class LocationDTO: NamedBaseDTO
+{
+    public PersonDTO? Owner {get;set;}
+    public int MaxCapacity {get;set;}
+}
