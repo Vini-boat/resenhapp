@@ -1,0 +1,11 @@
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="display-5 fw-bold">Contador</h1>
+    <h1 class="display-5 fw-bold">{{contagem}}</h1>
+    <div class="col-lg-6 mx-auto">
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <button (click)="aumentar()" type="button" class="btn btn-primary btn-lg px-4 gap-3">+1</button>
+        <button (click)="diminuir()" type="button" class="btn btn-secondary btn-lg px-4">-1</button>
+      </div>
+    </div>
+  </div>
