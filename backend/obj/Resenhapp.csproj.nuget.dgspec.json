@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\Resenhapp\\Resenhapp.csproj": {}
+    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\Resenhapp\\Resenhapp.csproj": {
+    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\Resenhapp\\Resenhapp.csproj",
+        "projectUniqueName": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj",
         "projectName": "Resenhapp",
-        "projectPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\Resenhapp\\Resenhapp.csproj",
+        "projectPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj",
         "packagesPath": "C:\\Users\\ti18\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\Resenhapp\\obj\\",
+        "outputPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ti18\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -45,6 +45,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
+            },
+            "dapper": {
+              "target": "Package",
+              "version": "[2.1.15, )"
             }
           },
           "imports": [
