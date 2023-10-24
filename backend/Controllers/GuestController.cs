@@ -25,13 +25,13 @@ public class GuestController: ControllerBase
         return Ok(_mapper.Map<GuestDTO>(guest));
     }
 
-    [HttpPost("[controller]")]
-    public ActionResult<List<GuestDTO>> Add([FromBody] GuestDTO new_guest)
-    {
-        var guest = _mapper.Map<Guest>(new_guest);
-        Guest.guests.Add(guest);
-        return Ok(Guest.guests.Select(guest => _mapper.Map<GuestDTO>(guest)));
-    }
+    // [HttpPost("[controller]")]
+    // public ActionResult<List<GuestDTO>> Add([FromBody] GuestDTO new_guest)
+    // {
+    //     var guest = _mapper.Map<Guest>(new_guest);
+    //     Guest.guests.Add(guest);
+    //     return Ok(Guest.guests.Select(guest => _mapper.Map<GuestDTO>(guest)));
+    // }
 
     [HttpDelete("[controller]/{id}")]
     public ActionResult DeleteById([FromRoute] int id)
