@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj": {}
+    "C:\\Users\\Vini\\Desktop\\desenvolvimento_web\\resenhapp\\backend\\Resenhapp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj": {
+    "C:\\Users\\Vini\\Desktop\\desenvolvimento_web\\resenhapp\\backend\\Resenhapp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj",
+        "projectUniqueName": "C:\\Users\\Vini\\Desktop\\desenvolvimento_web\\resenhapp\\backend\\Resenhapp.csproj",
         "projectName": "Resenhapp",
-        "projectPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\Resenhapp.csproj",
-        "packagesPath": "C:\\Users\\ti18\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ti18\\Desktop\\bezerra\\aplicacoes_web_ll\\projeto\\resenhapp\\backend\\obj\\",
+        "projectPath": "C:\\Users\\Vini\\Desktop\\desenvolvimento_web\\resenhapp\\backend\\Resenhapp.csproj",
+        "packagesPath": "C:\\Users\\Vini\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Vini\\Desktop\\desenvolvimento_web\\resenhapp\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ti18\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Vini\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -38,17 +38,27 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "AutoMapper": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[7.0.13, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.5.0, )"
-            },
-            "dapper": {
-              "target": "Package",
-              "version": "[2.1.15, )"
             }
           },
           "imports": [
@@ -70,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.413\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.415\\RuntimeIdentifierGraph.json"
         }
       }
     }

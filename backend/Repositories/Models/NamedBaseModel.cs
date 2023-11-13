@@ -1,4 +1,4 @@
-namespace Resenhapp;
+namespace Resenhapp.Repositories.Models;
 
 public class NamedBase: Base
 {

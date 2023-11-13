@@ -1,51 +1,65 @@
+using AutoMapper;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+
+using Resenhapp.Repositories.DTOs;
+using Resenhapp.Repositories.Models;
+using Resenhapp.Services.Interfaces;
 
 namespace Resenhapp.Controllers;
 
+[Route("api/[controller]/")]
 [ApiController]
 public class ItemController: ControllerBase
 {
-    [HttpGet("[controller]s")]
-    public IActionResult GetAll() => Ok(Item.items.ToList());
-    
-    [HttpGet("[controller]/{id}")]
-    public IActionResult GetById([FromRoute] int id)
+    private readonly IItemService _dbservice;
+    private readonly IMapper _mapper;
+    public ItemController(IItemService service, IMapper mapper)
     {
-        var item = Item.items.FirstOrDefault(x => x.Id == id);
-        if (item == null) return NotFound();
-        return Ok(item);
+        _dbservice = service;
+        _mapper = mapper;
     }
 
-    [HttpPost("[controller]")]
-    public IActionResult Add([FromBody]Item obj)
+    [HttpGet]
+    public async Task<ActionResult<List<ItemDTO>>> GetAll()
     {
-        var item = new Item {
-            Id = obj.Id,
-            Name = obj.Name,
-            Price = obj.Price,
-            Description = obj.Description
-        };
-        Item.items.Add(item);
-        return NoContent();
+        var items = await _dbservice.GetAll();
+        return Ok(_mapper.Map<List<ItemDTO>>(items));
     }
     
-    [HttpDelete("[controller]/{id}")]
-    public IActionResult DeleteById([FromRoute]int id)
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ItemDTO>> GetById([FromRoute] int id)
     {
-        var item = Item.items.FirstOrDefault(x => x.Id == id);
+        var item = await _dbservice.GetById(id);
         if (item == null) return NotFound();
-        Item.items.Remove(item);
-        return Ok();
+        var itemdto = _mapper.Map<ItemDTO>(item);
+        return Ok(itemdto);
     }
 
-    [HttpPut("[controller]")]
-    public IActionResult Update([FromBody]Item obj)
+    [HttpPost]
+    public async Task<ActionResult<List<ItemDTO>>> Add([FromBody]ItemDTO new_item)
     {
-        var item = Item.items.FirstOrDefault(x => x.Id == obj.Id);
+        var item = _mapper.Map<Item>(new_item);
+        await _dbservice.Create(item);
+       
+        var items = await _dbservice.GetAll();
+        return Ok(_mapper.Map<List<ItemDTO>>(items));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<List<ItemDTO>>> DeleteById([FromRoute]int id)
+    {
+        var item = await _dbservice.GetById(id);
         if (item == null) return NotFound();
-        item.Name = obj.Name;
-        item.Price = obj.Price;
-        item.Description = obj.Description;
-        return Ok(); 
+        await _dbservice.Delete(item);
+        var items = await _dbservice.GetAll();
+        return Ok(_mapper.Map<List<ItemDTO>>(items));
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<ItemDTO>> Update([FromBody]ItemDTO updated_item)
+    {
+        await _dbservice.Update(updated_item);
+        return Ok(await _dbservice.GetById(updated_item.Id));
     }
 }

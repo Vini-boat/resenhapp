@@ -1,16 +1,11 @@
-namespace Resenhapp;
+namespace Resenhapp.Repositories.Models;
 
 public class Guest: Base
 {
-    public Person Person {get;set;} = new Person();
-    public bool Invited  {get;set;}
-    public bool Confirmed  {get;set;}
+    public Person? Person {get;set;}
+    public bool Invited  {get;set;} = false;
+    public bool Confirmed  {get;set;} = false;
     public List<Person>? Agregates {get;set;}
-    
-    public static List<Guest> guests = new List<Guest> {
-        new Guest {Id = 1, Person = Person.persons.First(p => p.Name == "Vini"), Invited = false, Confirmed = false},
-        new Guest {Id = 2, Person = Person.persons.First(p => p.Name == "Amaral"), Invited = false, Confirmed = false},
-        new Guest {Id = 3, Person = Person.persons.First(p => p.Name == "Yasmin"), Invited = false, Confirmed = false},
-    };
+    public Party? Party {get;set;}
 }
 

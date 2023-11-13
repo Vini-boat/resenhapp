@@ -1,4 +1,4 @@
-namespace Resenhapp;
+namespace Resenhapp.Repositories.DTOs;
 
 public class NamedBaseDTO: BaseDTO
 {
