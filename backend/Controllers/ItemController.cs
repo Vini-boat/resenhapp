@@ -53,6 +53,7 @@ public class ItemController: ControllerBase
         if (item == null) return NotFound();
         await _dbservice.Delete(item);
         var items = await _dbservice.GetAll();
+        
         return Ok(_mapper.Map<List<ItemDTO>>(items));
     }
 
