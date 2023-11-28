@@ -37,22 +37,25 @@ public class PartyController: ControllerBase
 
     [HttpPost]
     public async Task<ActionResult<PartyDTO>> Add([FromBody] PartyDTO party)
-    {
-        var new_party = _mapper.Map<Party>(party);
-        await _dbservice.Create(new_party);
+    {;
+        await _dbservice.Create(party);
         return Ok();
     }
 
-    // [HttpPost]
-    // public async Task<ActionResult<PartyDTO>> AddUserToParty()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpPost("{id}/new_guest")]
+    public async Task<ActionResult<PartyDTO>> AddGuest([FromRoute] int id, [FromBody] GuestDTO guest)
+    {
+        await _dbservice.AddGuest(id, guest);
+        var party = await _dbservice.GetById(id);
+        return Ok(party);
+    }
 
-    // [HttpPost]
-    // public async Task<ActionResult<PartyDTO>> AddExpenseToParty()
-    // {
-    //     throw new NotImplementedException();
-    // }
+    [HttpPost("{id}/new_expense")]
+    public async Task<ActionResult<PartyDTO>> AddExpense([FromRoute] int id, [FromBody] ExpenseDTO expense)
+    {
+        await _dbservice.AddExpense(id, expense);
+        var party = await _dbservice.GetById(id);
+        return Ok(party);
+    }
 
 }

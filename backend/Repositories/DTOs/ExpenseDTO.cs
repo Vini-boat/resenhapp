@@ -2,7 +2,7 @@ namespace Resenhapp.Repositories.DTOs;
 
 public class ExpenseDTO: NamedBaseDTO
 {
-    public PersonDTO? Owner {get;set;}
+    public int? OwnerId {get;set;}
     public double Value {get;set;}
     public DateTime Date {get;set;}
     public string Description {get;set;} = string.Empty;
