@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Resenhapp.Services.Interfaces;
 
 using Resenhapp.Repositories.DTOs;
-using Resenhapp.Repositories.Models;
+
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Controllers;
 
@@ -40,7 +41,7 @@ public class PartyController: ControllerBase
         try{
             new_party = await _dbservice.Create(party);
         }
-        catch (Exception){return NotFound("User not found");}
+        catch (UserIdNotFoundException){return NotFound("User not found");}
         return Ok(new_party);
     }
 
@@ -64,7 +65,7 @@ public class PartyController: ControllerBase
     public async Task<ActionResult<List<PartyDTO>>> DeleteById([FromRoute]int id)
     {
         try{await _dbservice.DeleteById(id);}
-        catch (Exception){return NotFound();}
+        catch (PartyIdNotFoundException){return NotFound("Party id not found");}
         return Ok(await _dbservice.GetAll());
     }
 

@@ -4,7 +4,7 @@ using AutoMapper;
 using Resenhapp.Services.Interfaces;
 
 using Resenhapp.Repositories.DTOs;
-using Resenhapp.Repositories.Models;
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Controllers;
 
@@ -43,7 +43,7 @@ public class UserController: ControllerBase
     public async Task<ActionResult<List<UserDTO>>> DeleteById([FromRoute]int id)
     {
         try{await _dbservice.DeleteById(id);}
-        catch (Exception) {return NotFound();}
+        catch (UserIdNotFoundException) {return NotFound("User Id Not found");}
         return Ok(await _dbservice.GetAll());
     }
 }

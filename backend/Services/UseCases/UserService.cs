@@ -2,9 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
 using Resenhapp.Services.Interfaces;
+
 using Resenhapp.Repositories.Data;
 using Resenhapp.Repositories.Models;
 using Resenhapp.Repositories.DTOs;
+
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Services.UseCases;
 
@@ -28,7 +31,7 @@ public class UserService : IUserService
     public async Task DeleteById(int id)
     {
         var user_to_delete = await _context.Users.FindAsync(id);
-        if (user_to_delete == null) throw new Exception();
+        if (user_to_delete == null) throw new UserIdNotFoundException();
         _context.Users.Remove(user_to_delete);
         await _context.SaveChangesAsync();
     }
@@ -45,7 +48,7 @@ public class UserService : IUserService
     public async Task Update(UserDTO new_user)
     {
         var user = await _context.Users.FindAsync(new_user.Id);
-        if (user == null) throw new Exception();  
+        if (user == null) throw new UserIdNotFoundException();  
         user = _mapper.Map<User>(new_user);
         await _context.SaveChangesAsync();
     }

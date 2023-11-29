@@ -1,6 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using Resenhapp.Exceptions;
 using Resenhapp.Repositories.DTOs;
 using Resenhapp.Services.Interfaces;
 
@@ -41,7 +41,7 @@ public class ItemController: ControllerBase
     public async Task<ActionResult<List<ItemDTO>>> DeleteById([FromRoute]int id)
     {
         try{await _dbservice.DeleteById(id);}
-        catch (Exception){return NotFound();}
+        catch (ItemIdNotFoundException){return NotFound("Item Not Found");}
         return Ok(await _dbservice.GetAll());
     }
 

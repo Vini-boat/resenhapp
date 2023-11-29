@@ -1,9 +1,13 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
 using Resenhapp.Repositories.Data;
 using Resenhapp.Repositories.Models;
 using Resenhapp.Repositories.DTOs;
+
 using Resenhapp.Services.Interfaces;
+
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Services.UseCases;
 
@@ -37,7 +41,7 @@ public class PartyService: IPartyService
     public async Task<PartyDTO?> Create(PartyDTO party)
     {
         var user = await _context.Users.FindAsync(party.UserId);
-        if (user == null) throw new Exception();
+        if (user == null) throw new UserIdNotFoundException();
         var new_party = new Party {
             User = user,
             Guests = _mapper.Map<List<Guest>>(party.Guests),
@@ -51,7 +55,7 @@ public class PartyService: IPartyService
     public async Task DeleteById(int id)
     {
         var party_to_delete = await _context.Parties.FindAsync(id);
-        if (party_to_delete == null) throw new Exception();
+        if (party_to_delete == null) throw new PartyIdNotFoundException();
         _context.Parties.Remove(party_to_delete);
         await _context.SaveChangesAsync();
     }
