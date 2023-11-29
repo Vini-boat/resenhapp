@@ -36,8 +36,12 @@ public class PartyController: ControllerBase
     [HttpPost]
     public async Task<ActionResult<PartyDTO>> Add([FromBody] PartyDTO party)
     {;
-        await _dbservice.Create(party);
-        return Ok();
+        var new_party = new PartyDTO();
+        try{
+            new_party = await _dbservice.Create(party);
+        }
+        catch (Exception){return NotFound("User not found");}
+        return Ok(new_party);
     }
 
     [HttpPost("{id}/new_guest")]
@@ -54,6 +58,14 @@ public class PartyController: ControllerBase
         await _dbservice.AddExpense(id, expense);
         var party = await _dbservice.GetById(id);
         return Ok(party);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<List<PartyDTO>>> DeleteById([FromRoute]int id)
+    {
+        try{await _dbservice.DeleteById(id);}
+        catch (Exception){return NotFound();}
+        return Ok(await _dbservice.GetAll());
     }
 
 }

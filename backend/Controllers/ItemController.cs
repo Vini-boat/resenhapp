@@ -2,7 +2,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 using Resenhapp.Repositories.DTOs;
-using Resenhapp.Repositories.Models;
 using Resenhapp.Services.Interfaces;
 
 namespace Resenhapp.Controllers;
