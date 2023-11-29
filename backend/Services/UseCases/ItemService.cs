@@ -20,32 +20,35 @@ public class ItemService : IItemService
         _mapper = mapper;
     }
 
-    public async Task Create(Item item)
+    public async Task Create(ItemDTO item)
     {
-        _context.Items.Add(item);
+        var new_item = _mapper.Map<Item>(item);
+        _context.Items.Add(new_item);
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(Item item)
+    public async Task DeleteById(int id)
     {
-        _context.Items.Remove(item);
+        var item_to_delete = await _context.Items.FindAsync(id);
+        if (item_to_delete == null) throw new Exception();
+        _context.Items.Remove(item_to_delete);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Item>> GetAll()
+    public async Task<List<ItemDTO>> GetAll()
     {
-        return await _context.Items.ToListAsync();
+        return _mapper.Map<List<ItemDTO>>(await _context.Items.ToListAsync());
     }
 
-    public async Task<Item?> GetById(int id)
+    public async Task<ItemDTO?> GetById(int id)
     {
-        return await _context.Items.FindAsync(id);
+        return _mapper.Map<ItemDTO>(await _context.Items.FindAsync(id));
     }
 
     public async Task Update(ItemDTO new_item)
     {
         var item = await _context.Items.FindAsync(new_item.Id);
-        if (item == null) throw new Exception("deu nulo");  
+        if (item == null) throw new Exception();  
         item = _mapper.Map<Item>(new_item);
         await _context.SaveChangesAsync();
     }
