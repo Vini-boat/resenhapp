@@ -7,5 +7,5 @@ public interface IUserService
     public Task<UserDTO?> GetById(int id);
     public Task DeleteById(int id);
     public Task Create(UserDTO user);
-    public Task Update(UserDTO user);
+    public Task Update(UserDTO new_user);
 }

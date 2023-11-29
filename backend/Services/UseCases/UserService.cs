@@ -43,8 +43,11 @@ public class UserService : IUserService
     {
         return _mapper.Map<UserDTO>(await _context.Users.FindAsync(id));
     }
-    public Task Update(UserDTO user)
+    public async Task Update(UserDTO new_user)
     {
-        throw new NotImplementedException();
+        var user = await _context.Users.FindAsync(new_user.Id);
+        if (user == null) throw new Exception();  
+        user = _mapper.Map<User>(new_user);
+        await _context.SaveChangesAsync();
     }
 }
