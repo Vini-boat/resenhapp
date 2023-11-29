@@ -5,7 +5,6 @@ using Resenhapp.Services.Interfaces;
 using Resenhapp.Repositories.Data;
 using Resenhapp.Repositories.Models;
 using Resenhapp.Repositories.DTOs;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Resenhapp.Services.UseCases;
 
