@@ -13,18 +13,15 @@ namespace Resenhapp.Controllers;
 public class UserController: ControllerBase
 {
     private readonly IUserService _dbservice;
-    private readonly IMapper _mapper;
     public UserController(IUserService service, IMapper mapper)
     {
         _dbservice = service;
-        _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<ActionResult<List<UserDTO>>> GetAll()
     {
-        var users = await _dbservice.GetAll();
-        return Ok(_mapper.Map<List<UserDTO>>(users));
+        return Ok(await _dbservice.GetAll());
     }
     
     [HttpGet("{id}")]
@@ -32,26 +29,21 @@ public class UserController: ControllerBase
     {
         var user = await _dbservice.GetById(id);
         if (user == null) return NotFound();
-        return Ok(_mapper.Map<UserDTO>(user));
+        return Ok(user);
     }
 
     [HttpPost]
     public async Task<ActionResult<List<UserDTO>>> Add([FromBody]UserDTO new_user)
     {
-        var user = _mapper.Map<User>(new_user);
-        await _dbservice.Create(user);
-       
-        var users = await _dbservice.GetAll();
-        return Ok(_mapper.Map<List<UserDTO>>(users));
+        await _dbservice.Create(new_user);
+        return Ok(await _dbservice.GetAll());
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<List<UserDTO>>> DeleteById([FromRoute]int id)
     {
-        var user = await _dbservice.GetById(id);
-        if (user == null) return NotFound();
-        await _dbservice.Delete(user);
-        var users = await _dbservice.GetAll();
-        return Ok(_mapper.Map<List<UserDTO>>(users));
+        try{await _dbservice.DeleteById(id);}
+        catch (Exception) {return NotFound();}
+        return Ok(await _dbservice.GetAll());
     }
 }
