@@ -4,6 +4,7 @@ using AutoMapper;
 using Resenhapp.Services.Interfaces;
 using Resenhapp.Repositories.Data;
 using Resenhapp.Repositories.Models;
+using Resenhapp.Repositories.DTOs;
 
 namespace Resenhapp.Services.UseCases;
 
@@ -17,30 +18,35 @@ public class UserService : IUserService
         _context = context;
         _mapper = mapper;
     }
-    public async Task Create(User user)
+    public async Task Create(UserDTO user)
     {
-        _context.Users.Add(user);
+        var new_user = _mapper.Map<User>(user);
+        _context.Users.Add(new_user);
         await _context.SaveChangesAsync();
     }
 
-    public async Task Delete(User user)
+    public async Task DeleteById(int id)
     {
-        _context.Users.Remove(user);
+        var user_to_delete = await _context.Users.FindAsync(id);
+        if (user_to_delete == null) throw new Exception();
+        _context.Users.Remove(user_to_delete);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<User>> GetAll()
+    public async Task<List<UserDTO>> GetAll()
     {
-        return await _context.Users.ToListAsync();
+        return _mapper.Map<List<UserDTO>>(await _context.Users.ToListAsync());
     }
 
-    public async Task<User?> GetById(int id)
+    public async Task<UserDTO?> GetById(int id)
     {
-        return await _context.Users.FindAsync(id);
+        return _mapper.Map<UserDTO>(await _context.Users.FindAsync(id));
     }
-
-    public Task Update(User user)
+    public async Task Update(UserDTO new_user)
     {
-        throw new NotImplementedException();
+        var user = await _context.Users.FindAsync(new_user.Id);
+        if (user == null) throw new Exception();  
+        user = _mapper.Map<User>(new_user);
+        await _context.SaveChangesAsync();
     }
 }

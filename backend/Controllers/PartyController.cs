@@ -11,11 +11,9 @@ namespace Resenhapp.Controllers;
 [ApiController]
 public class PartyController: ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly IPartyService _dbservice;
-    public PartyController(IMapper mapper, IPartyService service)
+    public PartyController(IPartyService service)
     {
-        _mapper = mapper;
         _dbservice = service;
     }
 

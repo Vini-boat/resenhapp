@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 
 using Resenhapp.Repositories.DTOs;
@@ -13,18 +12,15 @@ namespace Resenhapp.Controllers;
 public class ItemController: ControllerBase
 {
     private readonly IItemService _dbservice;
-    private readonly IMapper _mapper;
     public ItemController(IItemService service, IMapper mapper)
     {
         _dbservice = service;
-        _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<ActionResult<List<ItemDTO>>> GetAll()
     {
-        var items = await _dbservice.GetAll();
-        return Ok(_mapper.Map<List<ItemDTO>>(items));
+        return Ok(await _dbservice.GetAll());
     }
     
     [HttpGet("{id}")]
@@ -32,29 +28,22 @@ public class ItemController: ControllerBase
     {
         var item = await _dbservice.GetById(id);
         if (item == null) return NotFound();
-        var itemdto = _mapper.Map<ItemDTO>(item);
-        return Ok(itemdto);
+        return Ok(item);
     }
 
     [HttpPost]
-    public async Task<ActionResult<List<ItemDTO>>> Add([FromBody]ItemDTO new_item)
+    public async Task<ActionResult<List<ItemDTO>>> Add([FromBody]ItemDTO item)
     {
-        var item = _mapper.Map<Item>(new_item);
-        await _dbservice.Create(item);
-       
-        var items = await _dbservice.GetAll();
-        return Ok(_mapper.Map<List<ItemDTO>>(items));
+        await _dbservice.Create(item);  
+        return Ok(await _dbservice.GetAll());
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<List<ItemDTO>>> DeleteById([FromRoute]int id)
     {
-        var item = await _dbservice.GetById(id);
-        if (item == null) return NotFound();
-        await _dbservice.Delete(item);
-        var items = await _dbservice.GetAll();
-        
-        return Ok(_mapper.Map<List<ItemDTO>>(items));
+        try{await _dbservice.DeleteById(id);}
+        catch (Exception){return NotFound();}
+        return Ok(await _dbservice.GetAll());
     }
 
     [HttpPut]
