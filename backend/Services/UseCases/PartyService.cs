@@ -1,11 +1,13 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+
 using Resenhapp.Repositories.Data;
 using Resenhapp.Repositories.Models;
 using Resenhapp.Repositories.DTOs;
-using Resenhapp.Migrations;
+
 using Resenhapp.Services.Interfaces;
-using SQLitePCL;
+
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Services.UseCases;
 
@@ -20,26 +22,26 @@ public class PartyService: IPartyService
         _mapper = mapper;
     }
 
-    public async Task<Party?> AddExpense(int party_id, ExpenseDTO expense)
+    public async Task<PartyDTO?> AddExpense(int party_id, ExpenseDTO expense)
     {
         var party = await _context.Parties.FindAsync(party_id);
         party?.Expenses!.Add(_mapper.Map<Expense>(expense));
         await _context.SaveChangesAsync();
-        return party;
+        return _mapper.Map<PartyDTO>(await _context.Parties.FindAsync(party_id));
     }
 
-    public async Task<Party?> AddGuest(int party_id, GuestDTO guest)
+    public async Task<PartyDTO?> AddGuest(int party_id, GuestDTO guest)
     {
         var party = await _context.Parties.FindAsync(party_id);
         party?.Guests!.Add(_mapper.Map<Guest>(guest));
         await _context.SaveChangesAsync();
-        return party;
+        return _mapper.Map<PartyDTO>(await _context.Parties.FindAsync(party_id));
     }
 
-    public async Task<Party?> Create(PartyDTO party)
+    public async Task<PartyDTO?> Create(PartyDTO party)
     {
         var user = await _context.Users.FindAsync(party.UserId);
-        if (user == null) return null;
+        if (user == null) throw new UserIdNotFoundException();
         var new_party = new Party {
             User = user,
             Guests = _mapper.Map<List<Guest>>(party.Guests),
@@ -47,27 +49,33 @@ public class PartyService: IPartyService
         };
         _context.Parties.Add(new_party);
         await _context.SaveChangesAsync();
-        return new_party;
+        return _mapper.Map<PartyDTO>(new_party);
     }
     
-    public async Task Delete(Party party)
+    public async Task DeleteById(int id)
     {
-        _context.Parties.Remove(party);
+        var party_to_delete = await _context.Parties.FindAsync(id);
+        if (party_to_delete == null) throw new PartyIdNotFoundException();
+        _context.Parties.Remove(party_to_delete);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Party>> GetAll()
+    public async Task<List<PartyDTO>> GetAll()
     {
-        return await _context.Parties.ToListAsync();
+        return _mapper.Map<List<PartyDTO>>(await _context.Parties.ToListAsync());
     }
 
-    public async Task<Party?> GetById(int id)
+    public async Task<PartyDTO?> GetById(int id)
     {
-        return await _context.Parties.FindAsync(id);
+        return _mapper.Map<PartyDTO>(await _context.Parties.FindAsync(id));
     }
 
-    public async Task<List<Party>> GetByUserId(int id)
+    public async Task<List<PartyDTO>> GetByUserId(int id)
     {
-        return await _context.Parties.Where(party => party.User!.Id == id).ToListAsync();
+        return _mapper.Map<List<PartyDTO>>(
+            await _context.Parties
+                            .Where(party => party.User!.Id == id)
+                            .ToListAsync()
+        );
     }
 }

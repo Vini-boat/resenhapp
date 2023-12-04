@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Resenhapp.Services.Interfaces;
 
 using Resenhapp.Repositories.DTOs;
-using Resenhapp.Repositories.Models;
+
+using Resenhapp.Exceptions;
 
 namespace Resenhapp.Controllers;
 
@@ -11,11 +12,9 @@ namespace Resenhapp.Controllers;
 [ApiController]
 public class PartyController: ControllerBase
 {
-    private readonly IMapper _mapper;
     private readonly IPartyService _dbservice;
-    public PartyController(IMapper mapper, IPartyService service)
+    public PartyController(IPartyService service)
     {
-        _mapper = mapper;
         _dbservice = service;
     }
 
@@ -38,8 +37,12 @@ public class PartyController: ControllerBase
     [HttpPost]
     public async Task<ActionResult<PartyDTO>> Add([FromBody] PartyDTO party)
     {;
-        await _dbservice.Create(party);
-        return Ok();
+        var new_party = new PartyDTO();
+        try{
+            new_party = await _dbservice.Create(party);
+        }
+        catch (UserIdNotFoundException){return NotFound("User not found");}
+        return Ok(new_party);
     }
 
     [HttpPost("{id}/new_guest")]
@@ -56,6 +59,14 @@ public class PartyController: ControllerBase
         await _dbservice.AddExpense(id, expense);
         var party = await _dbservice.GetById(id);
         return Ok(party);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<List<PartyDTO>>> DeleteById([FromRoute]int id)
+    {
+        try{await _dbservice.DeleteById(id);}
+        catch (PartyIdNotFoundException){return NotFound("Party id not found");}
+        return Ok(await _dbservice.GetAll());
     }
 
 }
